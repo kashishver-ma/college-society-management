@@ -1,45 +1,22 @@
 "use client";
-// src/app/dashboard/layout.tsx
 
-import React from "react";
-import { useAuth } from "../../hooks/useAuth";
 import { useRouter } from "next/navigation";
-// import "./globals.css";
-import "../../styles/globals.css"; // Adjust the path accordingly
+import { useEffect } from "react";
+import { useAuth } from "@/hooks/useAuth";
 
-// import "tailwindcss/tailwind.css";
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const { user, loading, logout } = useAuth();
+const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
+  const { user } = useAuth(); // Fetch authenticated user
 
-  console.log("Dashboard Layout:", { user, loading });
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (!user) {
+      router.push("/auth/login");
+    }
+  }, [user, router]);
 
   if (!user) {
-    router.push("/auth/login");
-    return null;
+    return null; // Prevents rendering during redirection
   }
-
-  const handleLogout = async () => {
-    try {
-      console.log("Initiating logout...");
-      await logout();
-      console.log("Logout successful");
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -53,7 +30,7 @@ export default function DashboardLayout({
             <div className="flex items-center space-x-4">
               <span className="text-gray-600">{user.email}</span>
               <button
-                onClick={handleLogout}
+                onClick={() => console.log("Logout logic here")}
                 className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors"
               >
                 Logout
@@ -67,4 +44,6 @@ export default function DashboardLayout({
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">{children}</main>
     </div>
   );
-}
+};
+
+export default DashboardLayout;

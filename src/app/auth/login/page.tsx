@@ -21,6 +21,7 @@ export default function LoginPage() {
 
     try {
       console.log("Attempting login for:", email);
+      console.log("Attempting login pasword:", password);
       const userRole = await login(email, password);
       console.log("Login successful, role:", userRole);
 

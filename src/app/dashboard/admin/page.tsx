@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import { auth, db } from "@/firebase/config"; // Ensure auth is imported
 import { useRouter } from "next/navigation";
 import {
   Users,
@@ -20,6 +22,7 @@ import {
   updateDoc,
   deleteDoc,
   addDoc,
+  setDoc,
 } from "firebase/firestore";
 import { app } from "@/firebase/config";
 import {
@@ -343,22 +346,24 @@ export default function AdminDashboard() {
   const handleUserSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
+    const adminUser = auth.currentUser;
+
     try {
       if (editMode && editId) {
-        // Get the current user data to check if society changed
+        // Fetch existing user details
         const userDoc = await getDoc(doc(db, "users", editId));
         const currentUserData = userDoc.data();
         const oldSocietyId = currentUserData?.societyId;
 
-        // Update the user
+        // Update the user's Firestore document
         await updateDoc(doc(db, "users", editId), {
           ...userForm,
           updatedAt: new Date(),
         });
 
-        // If the user's society changed, we need to update both societies' member arrays
+        // Handle society membership updates
         if (oldSocietyId !== userForm.societyId) {
-          // Remove from old society if there was one
+          // Remove from the old society
           if (oldSocietyId) {
             const oldSocietyDoc = await getDoc(
               doc(db, "societies", oldSocietyId)
@@ -374,7 +379,7 @@ export default function AdminDashboard() {
             }
           }
 
-          // Add to new society if there is one
+          // Add to the new society
           if (userForm.societyId) {
             const societyDoc = await getDoc(
               doc(db, "societies", userForm.societyId)
@@ -391,27 +396,65 @@ export default function AdminDashboard() {
           }
         }
       } else {
-        // Create a new user
-        const userRef = await addDoc(collection(db, "users"), {
+        // **Create a new user in Firebase Authentication**
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          userForm.email,
+          "DefaultPass@123"
+        );
+        const newUser = userCredential.user;
+
+        // **Immediately sign out the newly created user**
+        await signOut(auth);
+
+        // **Restore the admin session**
+        if (adminUser) {
+          await auth.updateCurrentUser(adminUser);
+        }
+
+        // Store user details in Firestore using Firebase UID
+        await setDoc(doc(db, "users", newUser.uid), {
           ...userForm,
           isActive: true,
           createdAt: new Date(),
         });
 
-        // If the user is assigned to a society, add them to that society's members array
         if (userForm.societyId) {
-          const societyDoc = await getDoc(
-            doc(db, "societies", userForm.societyId)
-          );
-          if (societyDoc.exists()) {
-            const society = societyDoc.data();
-            const members = society.members || [];
-            await updateDoc(doc(db, "societies", userForm.societyId), {
-              members: [...members, userRef.id],
+          console.log("Attempting to add user to society:", userForm.societyId);
+
+          const societyRef = doc(db, "societies", userForm.societyId);
+          const societyDoc = await getDoc(societyRef);
+
+          if (!societyDoc.exists()) {
+            console.error(
+              "Society document does not exist:",
+              userForm.societyId
+            );
+            return;
+          }
+
+          const society = societyDoc.data();
+          const members = society.members || [];
+
+          console.log("Current members before update:", members);
+
+          if (!members.includes(newUser.uid)) {
+            await updateDoc(societyRef, {
+              members: [...members, newUser.uid],
             });
+
+            console.log(
+              `User ${newUser.uid} added to society ${userForm.societyId}`
+            );
+          } else {
+            console.warn(
+              `User ${newUser.uid} is already a member of society ${userForm.societyId}`
+            );
           }
         }
       }
+
+      // Refresh data and reset form
       await fetchData();
       setShowUserDialog(false);
       setUserForm({ name: "", email: "", role: "member", societyId: "" });
