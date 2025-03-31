@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
-import { auth, db } from "@/firebase/config"; // Ensure auth is imported
-import { useRouter } from "next/navigation";
+import { auth } from "@/firebase/config"; // Ensure auth is imported
+// import { useRouter } from "next/navigation";
 import {
   Users,
   Building2,
@@ -510,7 +510,7 @@ export default function AdminDashboard() {
         type: "social",
         maxParticipants: 100,
       });
-    } catch (err) {
+    } catch (error) {
       setError("Failed to save event");
     } finally {
       setIsSubmitting(false);
@@ -573,7 +573,7 @@ export default function AdminDashboard() {
         priority: "medium",
         tags: "",
       });
-    } catch (err) {
+    } catch (error) {
       setError("Failed to save announcement");
     } finally {
       setIsSubmitting(false);
@@ -584,7 +584,7 @@ export default function AdminDashboard() {
     try {
       await deleteDoc(doc(db, "societies", id));
       await fetchData();
-    } catch (err) {
+    } catch (error) {
       setError("Failed to delete society");
     }
   };
@@ -623,8 +623,8 @@ export default function AdminDashboard() {
 
       // Refresh data
       await fetchData();
-    } catch (err) {
-      console.error("Error deleting user:", err);
+    } catch (error) {
+      console.error("Error deleting user:", error);
       setError(`Failed to delete user: ${error || "Unknown error"}`);
     }
   };
@@ -633,7 +633,7 @@ export default function AdminDashboard() {
     try {
       await deleteDoc(doc(db, "events", id));
       await fetchData();
-    } catch (err) {
+    } catch (error) {
       setError("Failed to delete event");
     }
   };
@@ -642,7 +642,7 @@ export default function AdminDashboard() {
     try {
       await deleteDoc(doc(db, "announcements", id));
       await fetchData();
-    } catch (err) {
+    } catch (error) {
       setError("Failed to delete announcement");
     }
   };

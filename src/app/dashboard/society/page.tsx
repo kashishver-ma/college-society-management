@@ -2,16 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
-import {
-  Users,
-  Calendar,
-  Bell,
-  Check,
-  X,
-  Plus,
-  Edit,
-  Trash2,
-} from "lucide-react";
+import { Plus, Edit, Trash2 } from "lucide-react";
 import {
   collection,
   query,
@@ -33,13 +24,7 @@ import {
 import { Button } from "@/components/common/Button";
 import { Input } from "@/components/common/input";
 import { Textarea } from "@/components/common/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/common/select";
+
 import {
   Tabs,
   TabsContent,
@@ -128,7 +113,7 @@ export default function SocietyDashboard() {
 
   // Dialog states
   const [showEventDialog, setShowEventDialog] = useState(false);
-  const [showAnnouncementDialog, setShowAnnouncementDialog] = useState(false);
+  // const [showAnnouncementDialog, setShowAnnouncementDialog] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
 
@@ -216,36 +201,36 @@ export default function SocietyDashboard() {
   }, [user, db]);
 
   // Handle member requests
-  const handleMemberRequest = async (
-    requestId: string,
-    status: "approved" | "rejected"
-  ) => {
-    try {
-      setIsSubmitting(true);
-      await updateDoc(doc(db, "memberRequests", requestId), {
-        status,
-        updatedAt: new Date(),
-        updatedBy: user?.id,
-      });
+  // const handleMemberRequest = async (
+  //   requestId: string,
+  //   status: "approved" | "rejected"
+  // ) => {
+  //   try {
+  //     setIsSubmitting(true);
+  //     await updateDoc(doc(db, "memberRequests", requestId), {
+  //       status,
+  //       updatedAt: new Date(),
+  //       updatedBy: user?.id,
+  //     });
 
-      // If approved, update user's societyId
-      if (status === "approved") {
-        const request = memberRequests.find((r) => r.id === requestId);
-        if (request) {
-          await updateDoc(doc(db, "users", request.userId), {
-            societyId: user?.societyId,
-            updatedAt: new Date(),
-          });
-        }
-      }
+  //     // If approved, update user's societyId
+  //     if (status === "approved") {
+  //       const request = memberRequests.find((r) => r.id === requestId);
+  //       if (request) {
+  //         await updateDoc(doc(db, "users", request.userId), {
+  //           societyId: user?.societyId,
+  //           updatedAt: new Date(),
+  //         });
+  //       }
+  //     }
 
-      setMemberRequests((prev) => prev.filter((req) => req.id !== requestId));
-    } catch (error) {
-      setError(`Failed to ${status} member request`);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  //     setMemberRequests((prev) => prev.filter((req) => req.id !== requestId));
+  //   } catch (error) {
+  //     setError(`Failed to ${status} member request`);
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
 
   const handleEventSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -302,53 +287,53 @@ export default function SocietyDashboard() {
   };
 
   // Handle announcement operations
-  const handleAnnouncementSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    try {
-      const announcementData = {
-        ...announcementForm,
-        societyId: user?.societyId,
-        createdBy: user?.id,
-      };
+  // const handleAnnouncementSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setIsSubmitting(true);
+  //   try {
+  //     const announcementData = {
+  //       ...announcementForm,
+  //       societyId: user?.societyId,
+  //       createdBy: user?.id,
+  //     };
 
-      if (editMode && editId) {
-        await updateDoc(doc(db, "announcements", editId), {
-          ...announcementData,
-          updatedAt: new Date(),
-        });
-      } else {
-        await addDoc(collection(db, "announcements"), {
-          ...announcementData,
-          createdAt: new Date(),
-        });
-      }
+  //     if (editMode && editId) {
+  //       await updateDoc(doc(db, "announcements", editId), {
+  //         ...announcementData,
+  //         updatedAt: new Date(),
+  //       });
+  //     } else {
+  //       await addDoc(collection(db, "announcements"), {
+  //         ...announcementData,
+  //         createdAt: new Date(),
+  //       });
+  //     }
 
-      // Refresh announcements list
-      const announcementsQuery = query(
-        collection(db, "announcements"),
-        where("societyId", "==", user?.societyId)
-      );
-      const announcementsSnapshot = await getDocs(announcementsQuery);
-      const announcementsData = announcementsSnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-        createdAt: doc.data().createdAt?.toDate(),
-      })) as Announcement[];
-      setAnnouncements(announcementsData);
+  //     // Refresh announcements list
+  //     const announcementsQuery = query(
+  //       collection(db, "announcements"),
+  //       where("societyId", "==", user?.societyId)
+  //     );
+  //     const announcementsSnapshot = await getDocs(announcementsQuery);
+  //     const announcementsData = announcementsSnapshot.docs.map((doc) => ({
+  //       id: doc.id,
+  //       ...doc.data(),
+  //       createdAt: doc.data().createdAt?.toDate(),
+  //     })) as Announcement[];
+  //     setAnnouncements(announcementsData);
 
-      setShowAnnouncementDialog(false);
-      setAnnouncementForm({
-        title: "",
-        content: "",
-        isPublished: false,
-      });
-    } catch (error) {
-      setError("Failed to save announcement");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  //     // setShowAnnouncementDialog(false);
+  //     setAnnouncementForm({
+  //       title: "",
+  //       content: "",
+  //       isPublished: false,
+  //     });
+  //   } catch (error) {
+  //     setError("Failed to save announcement");
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
 
   const deleteEvent = async (id: string) => {
     try {
@@ -359,16 +344,16 @@ export default function SocietyDashboard() {
     }
   };
 
-  const deleteAnnouncement = async (id: string) => {
-    try {
-      await deleteDoc(doc(db, "announcements", id));
-      setAnnouncements(
-        announcements.filter((announcement) => announcement.id !== id)
-      );
-    } catch (error) {
-      setError("Failed to delete announcement");
-    }
-  };
+  // const deleteAnnouncement = async (id: string) => {
+  //   try {
+  //     await deleteDoc(doc(db, "announcements", id));
+  //     setAnnouncements(
+  //       announcements.filter((announcement) => announcement.id !== id)
+  //     );
+  //   } catch (error) {
+  //     setError("Failed to delete announcement");
+  //   }
+  // };
 
   if (loading || isLoading) {
     return (
