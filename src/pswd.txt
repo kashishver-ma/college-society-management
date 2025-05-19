@@ -1,0 +1,12 @@
+vishuverma@gmail.com - vishu@123 (ADMIN)
+
+admin me se agar society head bnate h toh as a member add hota h society me
+auto assigned to null
+
+jatin societyheadtheia@gmail.com  DefaultPass@123
+daizy societyheadtech@gmail.com  DefaultPass@123
+diksha societyheadart@gmail.com  DefaultPass@123
+monika societyheadtechmusic@gmail.com  DefaultPass@123
+
+trying to add event from scoiety dahsbaord but  failed to do so.create not creating..
+

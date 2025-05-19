@@ -6,8 +6,15 @@ import { useAuth } from "@/hooks/useAuth";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
-  const { user } = useAuth(); // Fetch authenticated user
+  const { user, logout } = useAuth(); // Fetch authenticated user
 
+  const handlelogout = async () => {
+    try {
+      await logout(); // this will redirect via window.location.href internally
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
   useEffect(() => {
     if (!user) {
       router.push("/auth/login");
@@ -30,7 +37,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             <div className="flex items-center space-x-4">
               <span className="text-gray-600">{user.email}</span>
               <button
-                onClick={() => console.log("Logout logic here")}
+                onClick={handlelogout}
                 className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors"
               >
                 Logout

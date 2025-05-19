@@ -396,6 +396,8 @@ export default function AdminDashboard() {
           }
         }
       } else {
+        console.log("Final role being submitted:", userForm.role);
+
         // **Create a new user in Firebase Authentication**
         const userCredential = await createUserWithEmailAndPassword(
           auth,

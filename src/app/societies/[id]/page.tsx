@@ -12,11 +12,7 @@ export default function SocietiesPage() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Societies</h1>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center">
-          <Plus className="h-5 w-5 mr-2" />
-          Create Society
-        </button>
+        <h1 className="text-3xl font-bold p-4">Societies</h1>
       </div>
 
       {/* Search and Filter Bar */}
@@ -51,8 +47,8 @@ export default function SocietiesPage() {
               <div className="p-6">
                 <h3 className="text-xl font-semibold mb-2">{society.name}</h3>
                 <p className="text-gray-600 mb-4">{society.description}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {society.tags.map((tag) => (
+                {/* <div className="flex flex-wrap gap-2 mb-4">
+                  {society.map(() => (
                     <span
                       key={tag}
                       className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full"
@@ -60,11 +56,9 @@ export default function SocietiesPage() {
                       {tag}
                     </span>
                   ))}
-                </div>
+                </div> */}
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-500">
-                    {society.memberCount} members
-                  </span>
+                  <span className="text-sm text-gray-500">members</span>
                   <button className="text-blue-600 hover:text-blue-800">
                     View Details
                   </button>
