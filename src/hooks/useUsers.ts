@@ -26,7 +26,7 @@ export function useUsers() {
       const data = await getUsers();
       setUsers(data);
       setError(null);
-    } catch (err) {
+    } catch (_err) {
       setError('Failed to fetch users');
       alert({
         title: 'Error',
@@ -44,7 +44,7 @@ export function useUsers() {
       const user = await getUserById(id);
       setError(null);
       return user;
-    } catch (err) {
+    } catch (_err) {
       setError('Failed to fetch user');
       alert({
         title: 'Error',
@@ -67,7 +67,7 @@ export function useUsers() {
         description: 'User created successfully',
       });
       return newUser;
-    } catch (err) {
+    } catch (_err) {
       setError('Failed to create user');
       alert({
         title: 'Error',
@@ -94,7 +94,7 @@ export function useUsers() {
         description: 'User updated successfully',
       });
       return updatedUser;
-    } catch (err) {
+    } catch (_err) {
       setError('Failed to update user');
       alert({
         title: 'Error',

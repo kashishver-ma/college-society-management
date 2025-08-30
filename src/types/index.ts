@@ -80,11 +80,11 @@ export type { Announcement } from './announcement';
 
 export type Role = 'admin' | 'society_head' | 'member';
 
-export interface BaseResponse {
+export interface BaseResponse<T = unknown> {
   success: boolean;
   message: string;
-  data?: any;
-  error?: any;
+   data?: T;    // Use generic type instead of `any`
+  error?: string | null; // Better than `any`, store error messages
 }
 
 export interface PaginationParams {

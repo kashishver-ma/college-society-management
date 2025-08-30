@@ -1,16 +1,16 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Bell, Search, Filter, Trash2, Edit } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
+// import { useAuth } from "@/hooks/useAuth";
 import { useAnnouncements } from "@/hooks/useAnnouncements";
 import { useSocieties } from "@/hooks/useSocieties";
-import { Announcement } from "@/types";
+// import { Announcement } from "@/types";
 
 export default function AnnouncementsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSociety, setSelectedSociety] = useState("all");
 
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const { societies, loading: societiesLoading } = useSocieties();
   const {
     announcements,
@@ -39,13 +39,13 @@ export default function AnnouncementsPage() {
     }
   };
 
-  const canManageAnnouncement = (announcement: Announcement) => {
-    return (
-      user?.role === "admin" ||
-      (user?.role === "society_head" &&
-        user?.societyId === announcement.societyId)
-    );
-  };
+  // const canManageAnnouncement = (announcement: Announcement) => {
+  //   return (
+  //     user?.role === "admin" ||
+  //     (user?.role === "society_head" &&
+  //       user?.societyId === announcement.societyId)
+  //   );
+  // };
 
   const filteredAnnouncements = announcements.filter((announcement) => {
     const matchesSearch = searchQuery
@@ -88,17 +88,16 @@ export default function AnnouncementsPage() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">Announcements</h1>
-        {(user?.role === "admin" || user?.role === "society_head") && (
-          <button
-            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center"
-            onClick={() => {
-              // TODO: Open Create Announcement Modal
-            }}
-          >
-            <Bell className="h-5 w-5 mr-2" />
-            New Announcement
-          </button>
-        )}
+
+        <button
+          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center"
+          onClick={() => {
+            // TODO: Open Create Announcement Modal
+          }}
+        >
+          <Bell className="h-5 w-5 mr-2" />
+          New Announcement
+        </button>
       </div>
 
       {/* Filters */}
@@ -157,24 +156,22 @@ export default function AnnouncementsPage() {
                   </div>
                 </div>
 
-                {canManageAnnouncement(announcement) && (
-                  <div className="flex space-x-2">
-                    <button
-                      className="text-gray-400 hover:text-blue-600"
-                      onClick={() => {
-                        // TODO: Open Edit Modal
-                      }}
-                    >
-                      <Edit className="h-5 w-5" />
-                    </button>
-                    <button
-                      className="text-gray-400 hover:text-red-600"
-                      onClick={() => handleDelete(announcement.id)}
-                    >
-                      <Trash2 className="h-5 w-5" />
-                    </button>
-                  </div>
-                )}
+                <div className="flex space-x-2">
+                  <button
+                    className="text-gray-400 hover:text-blue-600"
+                    onClick={() => {
+                      // TODO: Open Edit Modal
+                    }}
+                  >
+                    <Edit className="h-5 w-5" />
+                  </button>
+                  <button
+                    className="text-gray-400 hover:text-red-600"
+                    onClick={() => handleDelete(announcement.id)}
+                  >
+                    <Trash2 className="h-5 w-5" />
+                  </button>
+                </div>
               </div>
             </div>
           ))

@@ -65,63 +65,63 @@ Textarea.displayName = "Textarea";
 
 export { Textarea };
 
-// Example usage:
-const TextareaExample = () => {
-  const [value, setValue] = React.useState("");
-  const [error, setError] = React.useState<string | undefined>();
+// // Example usage:
+// const TextareaExample = () => {
+//   const [value, setValue] = React.useState("");
+//   const [error, setError] = React.useState<string | undefined>();
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(e.target.value);
-    if (e.target.value.length > 500) {
-      setError("Text cannot exceed 500 characters");
-    } else {
-      setError(undefined);
-    }
-  };
+//   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+//     setValue(e.target.value);
+//     if (e.target.value.length > 500) {
+//       setError("Text cannot exceed 500 characters");
+//     } else {
+//       setError(undefined);
+//     }
+//   };
 
-  return (
-    <div className="space-y-4">
-      {/* Basic usage */}
-      <Textarea placeholder="Type your message here." />
+//   return (
+//     <div className="space-y-4">
+//       {/* Basic usage */}
+//       <Textarea placeholder="Type your message here." />
 
-      {/* With label and helper text */}
-      <Textarea
-        label="Description"
-        placeholder="Enter a detailed description"
-        helperText="Maximum 500 characters"
-      />
+//       {/* With label and helper text */}
+//       <Textarea
+//         label="Description"
+//         placeholder="Enter a detailed description"
+//         helperText="Maximum 500 characters"
+//       />
 
-      {/* With validation */}
-      <Textarea
-        label="Feedback"
-        placeholder="Enter your feedback"
-        value={value}
-        onChange={handleChange}
-        error={error}
-      />
+//       {/* With validation */}
+//       <Textarea
+//         label="Feedback"
+//         placeholder="Enter your feedback"
+//         value={value}
+//         onChange={handleChange}
+//         error={error}
+//       />
 
-      {/* Disabled state */}
-      <Textarea
-        label="Read Only"
-        placeholder="This textarea is disabled"
-        disabled
-        value="This content cannot be edited"
-      />
+//       {/* Disabled state */}
+//       <Textarea
+//         label="Read Only"
+//         placeholder="This textarea is disabled"
+//         disabled
+//         value="This content cannot be edited"
+//       />
 
-      {/* Custom size */}
-      <Textarea
-        label="Large Input"
-        placeholder="This textarea has 8 rows"
-        rows={8}
-      />
+//       {/* Custom size */}
+//       <Textarea
+//         label="Large Input"
+//         placeholder="This textarea has 8 rows"
+//         rows={8}
+//       />
 
-      {/* Required field */}
-      <Textarea
-        label="Required Field"
-        placeholder="This field is required"
-        required
-        helperText="This field cannot be empty"
-      />
-    </div>
-  );
-};
+//       {/* Required field */}
+//       <Textarea
+//         label="Required Field"
+//         placeholder="This field is required"
+//         required
+//         helperText="This field cannot be empty"
+//       />
+//     </div>
+//   );
+// };

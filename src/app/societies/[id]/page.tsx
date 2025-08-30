@@ -1,8 +1,8 @@
 // src/app/societies/page.tsx
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Search, Plus } from "lucide-react";
+import React, { useState } from "react";
+import { Search } from "lucide-react";
 import { useSocieties } from "@/hooks/useSocieties";
 
 export default function SocietiesPage() {

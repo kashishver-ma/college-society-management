@@ -11,11 +11,14 @@ import StatsCard from "@/components/dashboard/StatsCard";
 import { useAnnouncements } from "@/hooks/useAnnouncements";
 import { useEvents } from "@/hooks/useEvents";
 import { useSocieties } from "@/hooks/useSocieties";
-import { useAuth } from "@/hooks/useAuth";
+import { Timestamp } from "firebase/firestore";
+
+// Define a type for possible date fields
+type FirestoreDateField = Timestamp | Date | string | null | undefined;
 
 export default function LandingPage() {
   const router = useRouter();
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const { announcements, loading: announcementsLoading } = useAnnouncements();
   const { events, loading: eventsLoading } = useEvents();
   const { societies, loading: societiesLoading } = useSocieties();
@@ -25,26 +28,25 @@ export default function LandingPage() {
   console.log("All Announcements from Firebase:", announcements);
 
   // Helper function to safely convert Firestore timestamps or date strings
-  const safeDate = (dateField: any): Date => {
+  // Helper function to safely convert Firestore timestamps or date strings
+  const safeDate = (dateField: FirestoreDateField): Date => {
     if (!dateField) return new Date(); // Default to current date if field is missing
 
-    // If it's a Firestore timestamp with toDate method
-    if (typeof dateField.toDate === "function") {
-      return dateField.toDate();
+    if (dateField instanceof Timestamp) {
+      return dateField.toDate(); // Convert Firestore Timestamp to Date
     }
 
-    // If it's already a Date object
     if (dateField instanceof Date) {
       return dateField;
     }
 
-    // Try to parse as string
+    // Parse as string
     const parsedDate = new Date(dateField);
     return isNaN(parsedDate.getTime()) ? new Date() : parsedDate;
   };
 
   // Function to format date safely
-  const formatDate = (dateField: any): string => {
+  const formatDate = (dateField: FirestoreDateField): string => {
     try {
       const date = safeDate(dateField);
       return date.toLocaleDateString();

@@ -512,7 +512,7 @@ export default function AdminDashboard() {
         type: "social",
         maxParticipants: 100,
       });
-    } catch (error) {
+    } catch (_error) {
       setError("Failed to save event");
     } finally {
       setIsSubmitting(false);
@@ -575,7 +575,7 @@ export default function AdminDashboard() {
         priority: "medium",
         tags: "",
       });
-    } catch (error) {
+    } catch (_error) {
       setError("Failed to save announcement");
     } finally {
       setIsSubmitting(false);
@@ -586,7 +586,7 @@ export default function AdminDashboard() {
     try {
       await deleteDoc(doc(db, "societies", id));
       await fetchData();
-    } catch (error) {
+    } catch (_error) {
       setError("Failed to delete society");
     }
   };
@@ -635,7 +635,7 @@ export default function AdminDashboard() {
     try {
       await deleteDoc(doc(db, "events", id));
       await fetchData();
-    } catch (error) {
+    } catch (_error) {
       setError("Failed to delete event");
     }
   };
@@ -644,7 +644,7 @@ export default function AdminDashboard() {
     try {
       await deleteDoc(doc(db, "announcements", id));
       await fetchData();
-    } catch (error) {
+    } catch (_error) {
       setError("Failed to delete announcement");
     }
   };

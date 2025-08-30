@@ -1,5 +1,5 @@
 "use client";
-
+import React from "react";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { doc, getDoc } from "firebase/firestore";
@@ -10,7 +10,7 @@ const EventPage = () => {
   const params = useParams();
   const eventId = params.id as string;
   const router = useRouter();
-  const [event, setEvent] = useState<any>(null);
+  const [event, setEvent] = useState<unknown>(null);
   const [loading, setLoading] = useState(true);
   const [registrationUrl, setRegistrationUrl] = useState("");
   const [error, setError] = useState("");
@@ -41,12 +41,7 @@ const EventPage = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       // Get the base URL based on the environment
-      let baseUrl;
-
-      // Use window.location.host to get the domain:port without the protocol
-      // This works correctly in both development and production
-      baseUrl = `${window.location.protocol}//${window.location.host}`;
-
+      const baseUrl = `${window.location.protocol}//${window.location.host}`;
       setRegistrationUrl(`${baseUrl}/events/${eventId}/register`);
     }
   }, [eventId]);

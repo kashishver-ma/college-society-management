@@ -87,11 +87,11 @@ export default function SocietyDashboard() {
   const db = getFirestore(app);
 
   // State variables
-  const [membersCount, setMembersCount] = useState(0);
-  const [members, setMembers] = useState<Member[]>([]);
+  // const [membersCount, setMembersCount] = useState(0);
+  // const [members, setMembers] = useState<Member[]>([]);
   const [events, setEvents] = useState<Event[]>([]);
-  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
-  const [memberRequests, setMemberRequests] = useState<MemberRequest[]>([]);
+  // const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+  // const [memberRequests, setMemberRequests] = useState<MemberRequest[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -105,11 +105,11 @@ export default function SocietyDashboard() {
     maxParticipants: 0, // New field
   });
 
-  const [announcementForm, setAnnouncementForm] = useState({
-    title: "",
-    content: "",
-    isPublished: false,
-  });
+  // // const [announcementForm, setAnnouncementForm] = useState({
+  //   title: "",
+  //   content: "",
+  //   isPublished: false,
+  // });
 
   // Dialog states
   const [showEventDialog, setShowEventDialog] = useState(false);
@@ -174,7 +174,7 @@ export default function SocietyDashboard() {
           ...doc.data(),
           createdAt: doc.data().createdAt?.toDate(),
         })) as Announcement[];
-        setAnnouncements(announcementsData);
+        // setAnnouncements(announcementsData);
 
         // Fetch member requests
         const requestsQuery = query(
@@ -188,7 +188,7 @@ export default function SocietyDashboard() {
           ...doc.data(),
           createdAt: doc.data().createdAt?.toDate(),
         })) as MemberRequest[];
-        setMemberRequests(requestsData);
+        // setMemberRequests(requestsData);
       } catch (error) {
         console.error("Error fetching society data:", error);
         setError("Failed to fetch society data. Please try again.");
@@ -279,7 +279,7 @@ export default function SocietyDashboard() {
         status: "upcoming",
         maxParticipants: 0,
       });
-    } catch (error) {
+    } catch (_error) {
       setError("Failed to save event");
     } finally {
       setIsSubmitting(false);
@@ -339,7 +339,7 @@ export default function SocietyDashboard() {
     try {
       await deleteDoc(doc(db, "events", id));
       setEvents(events.filter((event) => event.id !== id));
-    } catch (error) {
+    } catch (_error) {
       setError("Failed to delete event");
     }
   };

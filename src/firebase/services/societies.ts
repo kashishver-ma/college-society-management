@@ -9,8 +9,7 @@ import {
   addDoc, 
   updateDoc, 
   deleteDoc,
-  query,
-  where
+  
 } from 'firebase/firestore';
 import { Society } from '@/types';
 

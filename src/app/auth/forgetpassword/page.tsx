@@ -11,7 +11,7 @@ export default function ForgotPasswordPage() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+  // const router = useRouter();
 
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,7 +22,7 @@ export default function ForgotPasswordPage() {
     try {
       await sendPasswordResetEmail(auth, email);
       setMessage("Reset link sent! Check your email.");
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Reset Error:", err);
       setError("Invalid email or user does not exist.");
     } finally {

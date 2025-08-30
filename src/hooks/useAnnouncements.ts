@@ -83,7 +83,7 @@ export function useAnnouncements() {
       const data = await response.json();
       setAnnouncements(data);
       setError(null);
-    } catch (err) {
+    } catch (_err) {
       setError("Failed to refresh announcements");
     } finally {
       setLoading(false);

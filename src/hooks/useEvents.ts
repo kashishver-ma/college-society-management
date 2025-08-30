@@ -29,7 +29,7 @@ export function useEvents() {
       const data = await getEvents();
       setEvents(data);
       setError(null);
-    } catch (err) {
+    } catch (_err) {
       setError('Failed to fetch events');
       alert({
         title: 'Error',
@@ -47,7 +47,7 @@ export function useEvents() {
       const event = await getEventById(id);
       setError(null);
       return event;
-    } catch (err) {
+    } catch (_err) {
       setError('Failed to fetch event');
       alert({
         title: 'Error',
@@ -70,7 +70,7 @@ export function useEvents() {
         description: 'Event created successfully',
       });
       return newEvent;
-    } catch (err) {
+    } catch (_err) {
       setError('Failed to create event');
       alert({
         title: 'Error',
@@ -97,7 +97,7 @@ export function useEvents() {
         description: 'Event updated successfully',
       });
       return updatedEvent;
-    } catch (err) {
+    } catch (_err) {
       setError('Failed to update event');
       alert({
         title: 'Error',
@@ -120,7 +120,7 @@ export function useEvents() {
         description: 'Event deleted successfully',
       });
       return true;
-    } catch (err) {
+    } catch (_err) {
       setError('Failed to delete event');
       alert({
         title: 'Error',
