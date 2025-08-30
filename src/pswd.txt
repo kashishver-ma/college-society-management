@@ -10,3 +10,4 @@ monika societyheadtechmusic@gmail.com  DefaultPass@123
 
 trying to add event from scoiety dahsbaord but  failed to do so.create not creating..
 
+`

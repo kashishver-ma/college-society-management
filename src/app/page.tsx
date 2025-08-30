@@ -19,6 +19,7 @@ export default function LandingPage() {
   const { announcements, loading: announcementsLoading } = useAnnouncements();
   const { events, loading: eventsLoading } = useEvents();
   const { societies, loading: societiesLoading } = useSocieties();
+
   console.log("All Events from Firebase:", events);
   console.log("All Societies from Firebase:", societies);
   console.log("All Announcements from Firebase:", announcements);
