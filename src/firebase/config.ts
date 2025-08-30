@@ -15,7 +15,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyBBFe7fv5Go4Oq7-UeCoeDackmaRZ8TqtM",
   authDomain: "college-societies.firebaseapp.com",
   projectId: "college-societies",
-  storageBucket: "college-societies.firebasestorage.app",
+   storageBucket: "college-societies.appspot.com",
   messagingSenderId: "1096617611164",
   appId: "1:1096617611164:web:18ffa6668c349016380259",
   measurementId: "G-07FVED658T"

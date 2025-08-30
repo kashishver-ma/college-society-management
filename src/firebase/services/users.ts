@@ -1,4 +1,4 @@
-
+"use client";
 // src/firebase/services/users.ts
 import { User } from '@/types';
 import { db } from '../config';

@@ -142,8 +142,8 @@ export default function SocietyDashboard() {
           id: doc.id,
           ...doc.data(),
         })) as Member[];
-        setMembers(membersData);
-        setMembersCount(membersSnapshot.size);
+        // setMembers(membersData);
+        // setMembersCount(membersSnapshot.size);
 
         // Fetch events
         // Fetch events with participants
