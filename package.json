@@ -16,7 +16,7 @@
     "axios": "^1.8.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "firebase": "^11.3.1",
+    "firebase": "^12.2.1",
     "lucide-react": "^0.475.0",
     "next": "^15.1.7",
     "qrcode.react": "^4.2.0",
@@ -44,9 +44,7 @@
   "scripts": {
     "seed": "cross-env NODE_ENV=development ts-node scripts/seed-database.ts",
     "dev": "next dev",
-   
-  "build": "next build || true",
-
+    "build": "next build || true",
     "start": "next start",
     "lint": "next lint"
   }
